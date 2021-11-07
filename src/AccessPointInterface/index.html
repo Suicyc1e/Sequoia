@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Bell AP settings</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" id="networkCredentialsForm">
+      <input type="ssid" name="ssid" placeholder="Network SSID"/>
+      <input type="password" name="password" placeholder="password"/>
+      <button>Connect</button>      
+    </form>
+    <script>
+      networkCredentialsForm.onsubmit = async (e) => {
+        e.preventDefault();
+    
+        // let response = await fetch('/networkCredentials/formData', 
+        // {
+        //   method: 'POST',
+        //   headers: 
+        //   {
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: new FormData(networkCredentialsForm)
+        // });
+    
+        // let result = await response.json();
+    
+        // alert(result.message);
+
+        let user = 
+        {
+            name: 'John',
+            surname: 'Smith'
+        };
+
+        var theForm = new FormData(networkCredentialsForm);
+
+        for (var p of theForm) 
+        {
+          
+          let name = p[0];
+          let value = p[1];
+
+          console.log(name, value)
+        }
+
+        let nwkCredentials =
+        {
+            ssid: theForm.get("ssid"),
+            password: theForm.get("password")
+        };
+
+        let response = await fetch('/networkCredentials/formData', 
+        {
+          method: 'POST',
+          headers: 
+          {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify(nwkCredentials)
+        });
+
+        let result = await response.json();
+        alert(result.message);
+      };
+    </script>
+  </div>
+</div>
+<!-- partial -->
+
+</body>
+</html>

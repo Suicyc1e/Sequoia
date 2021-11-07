@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<configurator>
+  <domain name="Sequoia" />
+  <!-- Smart Bell Settings Cluster -->
+  <cluster>
+    <name>Smart Bell Settings Cluster</name>
+    <domain>Sequoia</domain>
+    <description>This cluster provides user settings for the SmartDoorBell</description>
+    <code>0xFC3B</code>
+    <define>SMART_DOOR_BELL_CONTROLLER</define>
+    <client init="false" tick="false">true</client>
+    <server init="false" tick="false">true</server>
+    <attribute side="server" code="0x0000" define="AUTO_ANSWER" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">autoanswer control
+    </attribute>
+    <attribute side="server" code="0x0001" define="MICROPHONE_SOUND_DETECTION" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">sound detect control
+    </attribute>
+    <attribute side="server" code="0x0002" define="PHOTO_SAVING" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">photo saving control
+    </attribute>
+    <attribute side="server" code="0x0003" define="SOUND_SAVING" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">sound saving control
+    </attribute>
+    <attribute side="server" code="0x0004" define="BUTTON_TRIGGERED" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="false"  
+      default="" optional="false">button triggered alarm
+    </attribute>
+    <attribute side="server" code="0x0005" define="MICROPHONE_TRIGGERED" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="false"  
+      default="" optional="false">microphone triggered alarm
+    </attribute>
+    <attribute side="server" code="0x0006" define="BOX_VIBRATION_TRIGGERED" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="false"  
+      default="" optional="false">box vibration detected
+    </attribute>
+    <attribute side="server" code="0x0007" define="ADDITIONAL_SENSORS_MAPPER" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">additional sensors mapper
+    </attribute>
+    <attribute side="server" code="0xfffd" define="CLUSTER_REVISION" 
+      type="INT16U"  min="0x0000"   max="0x0001"   writable="false"  
+      default="0x0001" optional="false">cluster revision
+    </attribute>
+    <command source="client" code="0x00" 
+      name="EnableAutoAnswer" 
+      optional="false">
+      <description>
+        Enable Autoanswer
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+    <command source="client" code="0x01" 
+      name="EnableSoundDetection" 
+      optional="false">
+      <description>
+        Enable Sound Detection by Microphone
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+    <command source="client" code="0x02" 
+      name="EnablePhotoSaving" 
+      optional="false">
+      <description>
+        Enable Photo Saving when alarm 'trigger' fired - sound or motion or another defined source
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+    <command source="client" code="0x03" 
+      name="EnableSoundSaving" 
+      optional="false">
+      <description>
+        Enable Sound Saving when alarm 'trigger' fired - sound or motion or another defined external source
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+    <command source="client" code="0x04" 
+      name="EnableWebInterface" 
+      optional="false">
+      <description>
+        Enable Web Interface for user to be able to set up device
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+  </cluster>
+</configurator>

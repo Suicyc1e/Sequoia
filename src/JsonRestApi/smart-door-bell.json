@@ -1,0 +1,41 @@
+{
+    "data" : 
+    [
+        {
+            "cameraIp" : "192.168.0.7" 
+        },
+        {
+            "zigBeeStatus" : 1
+        },
+        {
+            "buttonTriggered" : 0
+        },
+        {
+            "microPhoneTriggered" : 0
+        },
+        {
+            "boxVibrationTriggered" : 0
+        },
+        {
+            "currentTrack" : 12
+        },
+        {
+            "autoAnswer" : 1
+        },
+        {
+            "soundDetect" : 1
+        },
+        {
+            "savePhoto" : 1
+        },
+        {
+            "saveSound" : 1
+        },
+        {
+            "webInterface" : 1
+        }
+    ]
+}
+
+
+

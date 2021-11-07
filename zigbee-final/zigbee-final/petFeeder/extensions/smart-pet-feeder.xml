@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<configurator>
+  <domain name="Sequoia" />
+  <!-- Smart Pet Feeder Controller Cluster -->
+  <cluster>
+    <name>Smart Flower Controller Cluster</name>
+    <domain>Sequoia</domain>
+    <description>This cluster provides user settings for the SmartPetFeeder</description>
+    <code>0xFC37</code>
+    <define>SMART_PET_FEEDER_CONTROLLER</define>
+    <client init="false" tick="false">true</client>
+    <server init="false" tick="false">true</server>
+    <attribute side="server" code="0x0000" define="PET_KIND" 
+      type="INT8U"  min="0x00"   max="0x05"   writable="true"  
+      default="0x00" optional="false">Pet Kind. (0 - cat, 1 - dog)
+    </attribute>   
+    <attribute side="server" code="0x0001" define="FOOD_PORTION_WEIGHT" 
+      type="INT16U"  min="0x0000"   max="0xffff"   writable="true"  
+      default="" optional="false">Food Portion Weight
+    </attribute>
+    <attribute side="server" code="0x0002" define="FEED_INTERVAL" 
+      type="INT16U"  min="0x0000"   max="0xffff"   writable="false"  
+      default="0x0000" optional="false">Feed Interval
+    </attribute>
+    <attribute side="server" code="0x0003" define="FOOD_NOT_CONSUMED_ALARM" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="false"  
+      default="0x00" optional="false">Food Not Cosumed Alarm
+    </attribute>
+    <attribute side="server" code="0x0004" define="FOOD_CONSUME_INTERVAL" 
+      type="INT16U"  min="0x0000"   max="0xffff"   writable="false"  
+      default="0x0000" optional="false">Food Consume Interval (after which alaram is triggered)
+    </attribute>
+    <attribute side="server" code="0x0005" define="CURRENT_FOOD_WEIGHT" 
+      type="INT16U"  min="0x0000"   max="0xffff"   writable="false"  
+      default="0x0000" optional="false">Current Food Weight
+    </attribute>
+    <attribute side="server" code="0x0006" define="BOWL_WEIGHT" 
+      type="INT16U"  min="0x0000"   max="0xffff"   writable="false"  
+      default="0x0000" optional="false">Bowl Weight (To be subtracted - set by tare())
+    </attribute>
+    <attribute side="server" code="0x0007" define="BOWL_MOVED_NOTIFICATION" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="false"  
+      default="0x00" optional="false">Bowl Moved Notification (when bowl is moved it is triggered)
+    </attribute>
+    <command source="client" code="0x00" 
+      name="SetPetKind" 
+      optional="false">
+      <description>
+        Set Pet Kind
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+      <command source="client" code="0x01" 
+      name="SetPortionWeigh" 
+      optional="false">
+      <description>
+        Set Portion Weight
+      </description>
+      <arg name="argOne" type="INT16U" />
+    </command>
+    <command source="client" code="0x02" 
+      name="SetFeedInterval" 
+      optional="false">
+      <description>
+        Set Feed Interval
+      </description>
+      <arg name="argOne" type="INT16U" />
+    </command>
+    <command source="client" code="0x03" 
+      name="FeedThePet" 
+      optional="false">
+      <description>
+        Feed The Pet
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x04" 
+      name="SetFoodConsumptionInterval" 
+      optional="false">
+      <description>
+        Set Food Consumption Interval
+      </description>
+      <arg name="argOne" type="INT16U" />
+    </command>
+    <command source="client" code="0x05" 
+      name="SetBowlWeight" 
+      optional="false">
+      <description>
+        Set Bowl Weight (Deprecated)
+      </description>
+      <arg name="argOne" type="INT16U" />
+    </command>   
+  </cluster>
+</configurator>

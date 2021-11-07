@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<configurator>
+  <domain name="Sequoia" />
+  <!-- Smart Flower Controller Cluster -->
+  <cluster>
+    <name>Smart Flower Controller Cluster</name>
+    <domain>Sequoia</domain>
+    <description>This cluster provides user settings for the SmartPlantCarer</description>
+    <code>0xFC05</code>
+    <define>SMART_PLANT_CARER_CONTROLLER</define>
+    <client init="false" tick="false">true</client>
+    <server init="false" tick="false">true</server>
+    <attribute side="server" code="0x0000" define="FUNCTIONAL_MODE" 
+      type="INT8U"  min="0x00"   max="0x05"   writable="true"  
+      default="0x00" optional="false">Functional Mode.
+      0 - automatic, 1 - sensor controlled, 2 - manual, 3 - by priority, 4 - external, 5 - all at the same time
+    </attribute>   
+    <attribute side="server" code="0x0001" define="DEVICE_STATUS" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">device status control
+    </attribute>
+    <attribute side="server" code="0x0002" define="WATERING_MAP" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">mapping water valves
+    </attribute>
+    <attribute side="server" code="0x0003" define="SENSOR_MAP" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">mapping soil humidity sensors
+    </attribute>
+    <attribute side="server" code="0x0004" define="LOWER_PLANT_ID_MAP" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">lower plant id mapper
+    </attribute>
+    <attribute side="server" code="0x0005" define="MIDDLE_PLANT_ID_MAP" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">lower plant id mapper
+    </attribute>
+    <attribute side="server" code="0x0006" define="UPPER_PLANT_ID_MAP" 
+      type="INT32U"  min="0x00000000"   max="0xffffffff"   writable="false"  
+      default="0x00000000" optional="false">lower plant id mapper
+    </attribute>
+    <attribute side="server" code="0x0007" define="NO_WATER_ALARM" 
+      type="BOOLEAN"  min="0x00"   max="0x01"   writable="true"  
+      default="" optional="false">no water alarm
+    </attribute>
+    <command source="client" code="0x00" 
+      name="EnableDevice" 
+      optional="false">
+      <description>
+        Enable Device
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+      <command source="client" code="0x01" 
+      name="SetWorkMode" 
+      optional="false">
+      <description>
+        Enable Device
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x02" 
+      name="WaterThePlant" 
+      optional="false">
+      <description>
+        Water The Plant By Id
+      </description>
+      <arg name="argOne" type="INT8U" />
+      <arg name="argTwo" type="INT16U" />
+    </command>
+    <command source="client" code="0x03" 
+      name="SetWateringIntervalForPlant" 
+      optional="false">
+      <description>
+        Set Watering Interval For Plant
+      </description>
+      <arg name="argOne" type="INT8U" />
+      <arg name="argTwo" type="INT16U" />
+    </command>
+    <command source="client" code="0x04" 
+      name="GetSoilHumidityById" 
+      optional="false">
+      <description>
+        Get Soil Humidity By Id
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x05" 
+      name="GetPlantLightById" 
+      optional="false">
+      <description>
+        Get Plant Light By Id
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x06" 
+      name="GetPlantAirHumidityById" 
+      optional="false">
+      <description>
+        Get Plant Air Humidity By Id
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x07" 
+      name="GetPlantAirTemperatureById" 
+      optional="false">
+      <description>
+        Get Plant Air Temperature By Id
+      </description>
+      <arg name="argOne" type="INT8U" />
+    </command>
+    <command source="client" code="0x08" 
+      name="EnableLight" 
+      optional="false">
+      <description>
+        Enable Light!
+      </description>
+      <arg name="argOne" type="BOOLEAN" />
+    </command>
+   
+  </cluster>
+</configurator>

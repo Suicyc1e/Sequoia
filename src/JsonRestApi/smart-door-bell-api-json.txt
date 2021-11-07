@@ -1,0 +1,176 @@
+===================================================
+1)
+//Get Camera IP
+
+
+GET
+/doorBell/cameraIP
+
+return:
+{
+    "cameraIP" : "192.168.0.5"
+}
+
+===================================================
+2)
+//Connect to ZigBee
+
+ex.
+http://192.168.1.97/doorBell/startZigBee
+
+POST 
+/doorBell/startZigBee
+
+return:
+OK(200)
+
+===================================================
+3)
+//Get ZigBee Status
+
+GET 
+/doorBell/zigBeeStatus
+
+return:
+{
+    "zigBeeStatus" : 1
+}
+
+===================================================
+4)
+//WIFI SSID and IP Address are know after SEARCH.
+
+
+===================================================
+5)
+//Set Control
+POST
+/doorBell/setControl?value=1&&controlId=1
+
+return:
+200(OK)
+
+ID:
+Autoanswer: 0
+SoundDetect: 1
+PhotoSaving: 2
+SoundSaving: 3
+WebInterface: 8
+
+All values are 0/1
+
+===================================================
+6)
+//Check Button Alaram
+
+GET
+/doorBell/checkButtonAlaram
+
+return:
+
+{
+    "buttonTriggered":0
+}
+
+Values are 0/1
+
+===================================================
+7)
+//Check Microphone Alaram
+
+GET
+/doorBell/checkMicroPhoneAlaram
+
+return:
+
+{
+    "microPhoneTriggered":0
+}
+
+Values are 0/1
+
+
+===================================================
+8)
+//Check Box Vibration Alaram
+
+GET
+/doorBell/checkBoxVibrationAlarm
+
+return:
+
+{
+    "boxVibrationTriggered":0
+}
+
+Values are 0/1
+
+
+===================================================
+8)
+//Get additional Sensor Maper
+Пожар - первый бит числа.
+
+GET
+/doorBell/getAdditionalSensorsMapper
+
+return:
+
+{
+    "sensorsMapper":0
+}
+
+Values are 0--->0xffffffff (но в форме %d) - uint32
+
+===================================================
+9)
+//Set Sound Control
+
+POST
+/doorBell/soundControl
+
+
+http://192.168.0.102/doorBell/soundControl?controlId=2&&value=7
+
+controlId:
+1 -> Stop / Resume
+2 -> Set Level (1-21)
+3 -> Set Next Song (1...12)
+
+
+===================================================
+10)
+//Get Current Track
+
+GET
+/doorBell/getCurrentTrack
+
+return:
+
+{
+    "currentTrack" : 12
+}
+
+
+===================================================
+11)
+//Get Comeplete Device Status
+
+GET
+/doorBell/getCurrentTrack
+
+return:
+
+{
+    "cameraIp" : "192.168.0.7" 
+    "zigBeeStatus" : 1
+    "buttonTriggered" : 0
+    "microPhoneTriggered" : 0
+    "boxVibrationTriggered" : 0
+    "currentTrack" : 12
+    "autoAnswer" : 1
+    "soundDetect" : 1
+    "savePhoto" : 1
+    "saveSound" : 1
+    "webInterface" : 1
+}

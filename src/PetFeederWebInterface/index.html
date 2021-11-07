@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart PetFed UI web control</title>
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="dashboard">
+  <header>
+    <div class="f fe">
+      
+      <div class="heading">
+        <h5 class="date">%date%</h5>
+        <h2 class="title">Control Panel</h2>
+      </div>
+    </div>
+	
+	
+	
+	<div class="MainLogo">
+	
+      <img class="photo" src="C:/Users/aleksandr.ivanov/Desktop/PetFed/Assets/MainLogo.png">
+      
+  </div>
+	
+  <div class="CornerRounder">
+	
+      <img class="photo2" src="C:/Users/aleksandr.ivanov/Desktop/PetFed/Assets/CornerRounder.png">
+      
+  </div>
+	
+
+    
+    
+  <div class="weather">
+    <div>
+      <strong>Zigbee State:</strong>
+      <p>%ZConnect%</p>
+  </div>
+   
+   <div class="svg">
+		<a class="button" onclick="this.style.display='none'" href="/ZigBeeConnect">
+				<svg>
+						<rect height="40" width="130" fill="transparent" />
+				</svg>
+				<span>Connect</span>
+		</a>
+   </div>
+   
+   
+   
+   
+    </div>
+  </header>
+  <section>
+  
+    <div class="svg">
+	 
+		<!--<a class="button" onclick="window.location.href = 'https://www.w3docs.com';" href="%ip_video_stream%">-->
+		<a class="button" href="%ip_video_stream%">
+      <svg>
+          <rect height="40" width="130" fill="transparent" />
+      </svg>
+      <span>Video</span>
+		</a>
+   </div>
+   
+    <!-- Melody chooser -->
+	<div class="Melody chooser">
+<h2 class="title_melody">Weight:</h2>
+   </div>
+  <div class="PicPlayButton">
+  
+	
+  
+      <input type="image" src="C:/Users/aleksandr.ivanov/Desktop/PetFed/Assets/play.png" width="20%" onclick="%play%">
+      
+  </div>
+
+<input type="range" id="step-slider" min="5" max="100" step="5" value="40" aria-describedby="month-desc">
+
+<div class="slider-value-floating">
+    <input type="number" id="step-slider-alt" aria-label="Loan term, manual input" aria-describedby="month-desc" min="10" max="100" value="40" step="5"> 
+    <span id="month-desc">gr</span>
+</div>
+
+<!-- This will be populated in JS with ticks as <span> -->
+<div class="slider-tickmarks" aria-hidden="true">
+
+</div>
+<!-- partial -->
+  <script>
+  //
+// 2. STEPS SLIDER
+//
+
+var step_slider = document.querySelector('#step-slider');
+var step_slider_alt = document.querySelector('#step-slider-alt');
+var floating_value = document.querySelector('.slider-value-floating');
+
+// calculate the width of a step
+var thumbWidth = 20;
+var left = step_slider.offsetLeft;
+var width = step_slider.offsetWidth;
+var min = parseInt(step_slider.getAttribute("min"), 10);
+var max = parseInt(step_slider.getAttribute("max"), 100);
+var step = parseInt(step_slider.getAttribute("step"), 5);
+var numberOfStops = ((max - min) / step) + 1;
+
+// this is the width "between steps"
+// because graphically each step has the width of the thumb
+var adjustedStepWidth = (width - (thumbWidth * numberOfStops)) / (numberOfStops - 1);
+
+// Calculate the position of a step tickmark given a slider value
+var getTickmarkPosition = function(value) {
+    var valueIndex = ((value - min) / step);
+    return Math.round(left + (adjustedStepWidth + thumbWidth) * valueIndex + thumbWidth/2);
+}
+
+// Move the floating bubble to follow the thumb
+var updateFloatingValuePosition = function() {
+    floating_value.style.left = getTickmarkPosition(step_slider.value) - (floating_value.offsetWidth / 2) + 'px';
+}
+
+
+// Draw the tickmarks and position the labels
+var drawTickmarks = function() {
+    var tickmarksList = document.querySelector('.slider-tickmarks');
+    
+    // Create a <span> for each stop
+    if(tickmarksList.querySelectorAll('span').length == 0) {
+        for(var i = 0; i < numberOfStops; i++) {
+            tickmark = document.createElement('span');
+            tickmarksList.appendChild(tickmark);
+        }
+    }
+    
+    // Position each span according to its index
+    tickmarksList.querySelectorAll('span').forEach(function(el, i) {
+        el.style.left = getTickmarkPosition(min + step * i) + 'px';
+    });
+    
+    // Position the min/max labels
+    tickmarksList.querySelectorAll('label').forEach(function(el) {
+        var i = parseInt(el.getAttribute('data-step'), 10) - 1;
+        el.style.left = getTickmarkPosition(min + step * i) + 'px';
+        
+        // optional - a nice UI touch would be to add an event handler
+        // on each tick to move the slider there
+        // (it is not necessary or suggested to make this keyboard focusable
+        // as it is doable within the slider already and would add tab stops)
+        el.addEventListener("click", function(e) {
+            step_slider.value = step_slider_alt.value = min + step * i;
+            updateFloatingValuePosition();
+        });
+    });
+};
+
+// Call these on the first draw
+drawTickmarks();
+updateFloatingValuePosition();
+
+//
+// Events for the second slider
+//
+
+step_slider.addEventListener("input", function(e) {
+    step_slider_alt.value = step_slider.value;
+    updateFloatingValuePosition();
+});
+
+// IE only fires a "change" event for sliders
+step_slider.addEventListener("change", function(e) {
+    step_slider_alt.value = step_slider.value;
+    updateFloatingValuePosition();
+}); 
+
+// Updating the text field updates the slider too
+step_slider_alt.addEventListener("change", function(e) {
+    step_slider.value = step_slider_alt.value;
+    updateFloatingValuePosition();
+}); 
+
+// Update position of elements if viewport is resized
+window.addEventListener("resize", function() {
+    left = step_slider.offsetLeft;
+    width = step_slider.offsetWidth;
+    adjustedStepWidth = (width - (thumbWidth * numberOfStops)) / (numberOfStops - 1)
+
+    drawTickmarks();
+    updateFloatingValuePosition();
+});
+  
+  </script>
+  
+ 
+  <!-- Appliances -->
+    <div class="appliances">
+     
+      <div class="appliance">
+        <input type="checkbox" name="a" id="a">
+        <label for="a">
+          <i class="l"></i>
+          <strong>SD storage</strong>
+          <span data-o="on" data-c="off"></span>
+          <a href="/SDStorage"></a>
+          <script>function toggleCheckbox(element) 
+          {
+            var xhr = new XMLHttpRequest();           
+            //Take it easy!
+            if(element.checked){ xhr.open("GET", "/sdStorage?state=1", true); }
+            else { xhr.open("GET", "/sdStorage?state=0", true); }
+
+            xhr.send();
+          }
+          </script>
+          <small></small>
+        </label>
+		
+      </div>
+      
+      <div class="appliance">
+        <input type="checkbox" name="a" id="b">
+        <label for="b">
+          <i class="r"></i>
+          <strong>AutoAnswer</strong>
+          <span data-o="on" data-c="off"></span>
+          <a href="/AutoAnswer"></a>
+          <script>function toggleCheckbox(element) {
+            var xhr = new XMLHttpRequest();
+            
+            //This is how it is expected to be...
+            //if(element.checked){ xhr.open("GET", "/autoanswer?output="+element.id+"&state=1", true); }
+            //else { xhr.open("GET", "/update?output="+element.id+"&state=0", true); }
+            
+            //Take it easy!
+            if(element.checked){ xhr.open("GET", "/autoanswer?state=1", true); }
+            else { xhr.open("GET", "/autoanswer?state=0", true); }
+
+            xhr.send();
+          }
+          </script>
+          <small></small>
+        </label>
+      </div>
+      
+      <div class="appliance">
+        <input type="checkbox" name="a" id="c">
+        <label for="c">
+          <i class="a"></i>
+          <strong>Alarm</strong>
+          <span data-o="on" data-c="off"></span>
+          <a href="/Alarm"></a>
+          <script>function toggleCheckbox(element) 
+            {
+              var xhr = new XMLHttpRequest();           
+              //Take it easy!
+              if(element.checked){ xhr.open("GET", "/alarm?state=1", true); }
+              else { xhr.open("GET", "/alarm?state=0", true); }
+  
+              xhr.send();
+            }
+          </script>
+          <small></small>
+        </label>
+      </div>
+      
+      <div class="appliance">
+        <input type="checkbox" name="a" id="d">
+        <label for="d">
+          <i class="f"></i>
+          <strong>Voice detector</strong>
+          <span data-o="on" data-c="off"></span>
+          <a href="/VoiceDetector"></a>
+          <script>function toggleCheckbox(element) 
+            {
+              var xhr = new XMLHttpRequest();           
+              //Take it easy!
+              if(element.checked){ xhr.open("GET", "/voiceDetector?state=1", true); }
+              else { xhr.open("GET", "/voiceDetector?state=0", true); }
+  
+              xhr.send();
+            }
+          </script>
+          <small></small>
+        </label>
+      </div>
+      
+     
+      </div>
+      
+	  
+<table class="table-fill">
+<thead>
+<tr>
+<th class="text-left">Sensors</th>
+<th class="text-left">Status</th>
+</tr>
+</thead>
+<tbody class="table-hover">
+<tr>
+<td class="text-left">Fire</td>
+<td class="text-left">%fire_s_state%</td>
+</tr>
+<tr>
+<td class="text-left">Vibro</td>
+<td class="text-left">%vibro_s_state%</td>
+</tr>
+<tr>
+<td class="text-left">Mat floor</td>
+<td class="text-left">%mat_s_state%</td>
+</tr>
+<tr>
+<td class="text-left">Motion</td>
+<td class="text-left">%mot_s_state%</td>
+</tr>
+</tbody>
+</table>
+  </section>
+</div>
+
+
+
+
+<!-- partial -->
+  
+</body>
+</html>
